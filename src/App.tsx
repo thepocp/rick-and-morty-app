@@ -1,34 +1,24 @@
-import { FC, useState } from 'react';
+import {
+  AppBar,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import { FC } from "react";
 
-import reactLogo from './assets/react.svg';
+const darkTheme = createTheme();
 
-import './App.css';
-
-export const App: FC = () => {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" rel="noreferrer" target="_blank">
-          <img alt="Vite logo" className="logo" src="/vite.svg" />
-        </a>
-        <a href="https://reactjs.org" rel="noreferrer" target="_blank">
-          <img alt="React logo" className="logo react" src={reactLogo} />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
-};
+export const App: FC = () => (
+  <ThemeProvider theme={darkTheme}>
+    <CssBaseline />
+    <AppBar position="relative">
+      <Toolbar>
+        <Typography color="inherit" noWrap variant="h6">
+          Test
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  </ThemeProvider>
+);
