@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": ["src/generated/graphql.ts"],
   "env": {
     "browser": true,
     "es6": true,
