@@ -1,0 +1,169 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "prettier",
+    "react-hooks",
+    "react",
+    "simple-import-sort"
+  ],
+  "overrides": [
+    {
+      "plugins": [
+        "jest",
+        "testing-library"
+      ],
+      "files": [
+        "**/__tests__/**/*.test.ts"
+      ],
+      "extends": [
+        "plugin:testing-library/react",
+        "plugin:jest/recommended"
+      ]
+    }
+  ],
+  "rules": {
+    "prettier/prettier": 2,
+    "camelcase": 0,
+    "semi": [
+      2,
+      "always"
+    ],
+    "eqeqeq": [
+      2,
+      "always"
+    ],
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "no-empty": [
+      2,
+      {
+        "allowEmptyCatch": true
+      }
+    ],
+    "jsx-quotes": [
+      2,
+      "prefer-double"
+    ],
+    "no-console": 2,
+    "no-unused-vars": 0,
+    "no-underscore-dangle": 0,
+    "no-mixed-operators": 2,
+    "eol-last": 2,
+    "no-confusing-arrow": 0,
+    "arrow-body-style": 2,
+    "no-extra-parens": 0,
+    "no-param-reassign": 2,
+    "prefer-template": 2,
+    "class-methods-use-this": 0,
+    "newline-before-return": 2,
+    "no-use-before-define": 0,
+    "no-shadow": 0,
+    "import/extensions": 0,
+    "import/newline-after-import": 2,
+    "import/no-cycle": 2,
+    "import/no-default-export": 2,
+    "import/no-duplicates": 2,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-named-as-default-member": 2,
+    "import/no-named-as-default": 2,
+    "import/no-unresolved": 0,
+    "import/no-useless-path-segments": 2,
+    "import/order": 2,
+    "import/prefer-default-export": 0,
+    "react/jsx-sort-props": 2,
+    "react/static-property-placement": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
+    "react/prop-types": 0,
+    "react/no-access-state-in-setstate": 0,
+    "react/destructuring-assignment": 0,
+    "react/display-name": 0,
+    "react/no-array-index-key": 0,
+    "react/require-default-props": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/no-unstable-nested-components": 0,
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "react/sort-comp": [
+      2,
+      {
+        "order": [
+          "static-methods",
+          "lifecycle",
+          "render",
+          "everything-else"
+        ]
+      }
+    ],
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/explicit-function-return-type": 2,
+    "@typescript-eslint/no-use-before-define": 2,
+    "@typescript-eslint/no-shadow": 2,
+    "@typescript-eslint/no-unused-vars": 2,
+    "react-hooks/rules-of-hooks": 2,
+    "react-hooks/exhaustive-deps": 2,
+    "simple-import-sort/imports": [
+      2,
+      {
+        "groups": [
+          [
+            "^\\u0000"
+          ],
+          [
+            "^[^.]"
+          ],
+          [
+            "^\\."
+          ],
+          [
+            "^.+\\.s?css$"
+          ]
+        ]
+      }
+    ]
+  }
+}
