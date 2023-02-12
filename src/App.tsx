@@ -1,28 +1,35 @@
-import GitHubIcon from '@mui/icons-material/GitHub';
 import {
-  AppBar,
   CircularProgress,
   createTheme,
   CssBaseline,
   Grid,
-  Link,
   SwipeableDrawer,
   ThemeProvider,
-  Toolbar,
-  Typography,
   useMediaQuery,
 } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import { CharacterInfo } from './components/CharacterInfo';
 import { CharacterList } from './components/CharacterList';
+import { TopBar } from './components/TopBar';
 import { useCharacterLazyQuery, useCharactersQuery } from './generated/graphql';
 import { filterEmpty } from './helpers/arrays';
 
-const darkTheme = createTheme();
-
 export const App: FC = () => {
-  const isSm = useMediaQuery(darkTheme.breakpoints.up('sm'));
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [darkMode, setDarkMode] = useState(prefersDarkMode);
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+        },
+      }),
+    [darkMode]
+  );
+
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { data: charactersData, loading: charactersLoading } =
@@ -49,21 +56,9 @@ export const App: FC = () => {
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static">
-        <Toolbar>
-          <Typography color="inherit" noWrap sx={{ flexGrow: 1 }} variant="h6">
-            Rick and Morty character guide
-          </Typography>
-          <Link
-            href="https://github.com/thepocp/rick-and-morty-app"
-            target="_blank"
-          >
-            <GitHubIcon color="action" />
-          </Link>
-        </Toolbar>
-      </AppBar>
+      <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
       {charactersLoading ? (
         <Grid container justifyContent="center" margin="100px" width="100%">
           <CircularProgress />
