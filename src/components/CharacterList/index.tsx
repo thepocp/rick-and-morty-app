@@ -6,12 +6,23 @@ import { CharacterCard } from '../CharacterCard';
 
 type Props = {
   characters: Partial<Character>[];
+  showCharacterInfo: (id: string) => void;
+  characterLoadingId: string | undefined;
 };
-export const CharacterList: FC<Props> = ({ characters }) => (
-  <Container maxWidth="md" sx={{ py: 8 }}>
+export const CharacterList: FC<Props> = ({
+  characters,
+  showCharacterInfo,
+  characterLoadingId,
+}) => (
+  <Container maxWidth="md">
     <Grid container spacing={2}>
       {characters.map(character => (
-        <CharacterCard key={character.id} character={character} />
+        <CharacterCard
+          key={character.id}
+          character={character}
+          loading={characterLoadingId === character.id}
+          showCharacterInfo={showCharacterInfo}
+        />
       ))}
     </Grid>
   </Container>
