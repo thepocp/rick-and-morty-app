@@ -1,9 +1,11 @@
+import GitHubIcon from '@mui/icons-material/GitHub';
 import {
   AppBar,
   CircularProgress,
   createTheme,
   CssBaseline,
   Grid,
+  Link,
   SwipeableDrawer,
   ThemeProvider,
   Toolbar,
@@ -49,11 +51,17 @@ export const App: FC = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar position="static">
         <Toolbar>
-          <Typography color="inherit" noWrap variant="h6">
+          <Typography color="inherit" noWrap sx={{ flexGrow: 1 }} variant="h6">
             Rick and Morty character guide
           </Typography>
+          <Link
+            href="https://github.com/thepocp/rick-and-morty-app"
+            target="_blank"
+          >
+            <GitHubIcon color="action" />
+          </Link>
         </Toolbar>
       </AppBar>
       {charactersLoading ? (
