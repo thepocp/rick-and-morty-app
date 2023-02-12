@@ -1,4 +1,4 @@
-import { Card, CardMedia, Typography } from '@mui/material';
+import { CardMedia, Typography } from '@mui/material';
 import { FC } from 'react';
 
 import { CharacterQuery } from '../../generated/graphql';
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const CharacterInfo: FC<Props> = ({ character }) => (
-  <Card sx={{ padding: '1rem', overflow: 'auto' }}>
+  <div style={{ padding: '1rem', overflow: 'auto' }}>
     <CardMedia
       alt={character?.name || ''}
       component="img"
@@ -49,5 +49,5 @@ export const CharacterInfo: FC<Props> = ({ character }) => (
         ))}
       </>
     ) : null}
-  </Card>
+  </div>
 );

@@ -3,14 +3,13 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  SwipeableDrawer,
   ThemeProvider,
   useMediaQuery,
 } from '@mui/material';
 import { FC, useMemo, useState } from 'react';
 
-import { CharacterInfo } from './components/CharacterInfo';
 import { CharacterList } from './components/CharacterList';
+import { CharacterPanel } from './components/CharacterPanel';
 import { TopBar } from './components/TopBar';
 import { useCharacterLazyQuery, useCharactersQuery } from './generated/graphql';
 import { filterEmpty } from './helpers/arrays';
@@ -28,8 +27,6 @@ export const App: FC = () => {
       }),
     [darkMode]
   );
-
-  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { data: charactersData, loading: charactersLoading } =
@@ -60,7 +57,12 @@ export const App: FC = () => {
       <CssBaseline />
       <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
       {charactersLoading ? (
-        <Grid container justifyContent="center" margin="100px" width="100%">
+        <Grid
+          alignItems="center"
+          container
+          height="100vh"
+          justifyContent="center"
+        >
           <CircularProgress />
         </Grid>
       ) : null}
@@ -69,28 +71,12 @@ export const App: FC = () => {
         characters={characters}
         showCharacterInfo={showCharacterInfo}
       />
-      <SwipeableDrawer
-        anchor={isSm ? 'right' : 'bottom'}
-        onClose={(): void => {
-          setIsDrawerOpen(false);
-        }}
-        onOpen={(): void => {
-          setIsDrawerOpen(true);
-        }}
-        open={isDrawerOpen}
-        PaperProps={{
-          sx: {
-            width: isSm ? '500px' : 'auto',
-            height: isSm ? '100vh' : '70vh',
-          },
-        }}
-      >
-        {characterLoading ? (
-          <CircularProgress />
-        ) : (
-          <CharacterInfo character={characterData?.character} />
-        )}
-      </SwipeableDrawer>
+      <CharacterPanel
+        character={characterData?.character}
+        characterLoading={characterLoading}
+        isDrawerOpen={isDrawerOpen}
+        toggleDrawer={(): void => setIsDrawerOpen(!isDrawerOpen)}
+      />
     </ThemeProvider>
   );
 };
