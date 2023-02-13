@@ -1,22 +1,28 @@
 import {
-  CircularProgress,
+  Container,
   createTheme,
   CssBaseline,
   Grid,
+  Skeleton,
   ThemeProvider,
   useMediaQuery,
 } from '@mui/material';
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 import { CharacterList } from './components/CharacterList';
 import { CharacterPanel } from './components/CharacterPanel';
 import { TopBar } from './components/TopBar';
-import { useCharacterLazyQuery, useCharactersQuery } from './generated/graphql';
+import {
+  Character,
+  useCharacterLazyQuery,
+  useCharactesLazyQuery,
+} from './generated/graphql';
 import { filterEmpty } from './helpers/arrays';
 
 export const App: FC = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
+  const [characters, setCharacters] = useState<Partial<Character>[]>([]);
 
   const theme = useMemo(
     () =>
@@ -29,27 +35,37 @@ export const App: FC = () => {
   );
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { data: charactersData, loading: charactersLoading } =
-    useCharactersQuery();
+  const [
+    loadCharacters,
+    {
+      data: charactersData,
+      loading: charactersLoading,
+      variables: charactersVariables,
+    },
+  ] = useCharactesLazyQuery();
 
   const [
     loadCharacterInfo,
-    {
-      data: characterData,
-      variables: characterVariables,
-      loading: characterLoading,
-    },
+    { data: characterData, loading: characterLoading },
   ] = useCharacterLazyQuery();
 
-  const characters = filterEmpty(charactersData?.characters?.results || []);
-
-  const characterLoadingId = characterLoading
-    ? characterVariables?.id
-    : undefined;
+  useEffect(() => {
+    setCharacters(oldValue =>
+      filterEmpty([...oldValue, ...(charactersData?.characters?.results || [])])
+    );
+  }, [charactersData]);
 
   const showCharacterInfo = (id: string): void => {
     loadCharacterInfo({ variables: { id } });
     setIsDrawerOpen(true);
+  };
+
+  const fetchData = (): void => {
+    loadCharacters({
+      variables: {
+        page: (charactersVariables?.page || 0) + 1,
+      },
+    });
   };
 
   return (
@@ -57,18 +73,19 @@ export const App: FC = () => {
       <CssBaseline />
       <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
       {charactersLoading ? (
-        <Grid
-          alignItems="center"
-          container
-          height="100vh"
-          justifyContent="center"
-        >
-          <CircularProgress />
-        </Grid>
+        <Container maxWidth="md">
+          <Grid container spacing={2}>
+            {new Array(20).fill(0).map((_, index) => (
+              <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
+                <Skeleton height="320px" variant="rectangular" />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       ) : null}
       <CharacterList
-        characterLoadingId={characterLoadingId}
         characters={characters}
+        fetchData={fetchData}
         showCharacterInfo={showCharacterInfo}
       />
       <CharacterPanel

@@ -208,10 +208,12 @@ export type CharacterQueryVariables = Exact<{
 
 export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, name?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, image?: string | null, origin?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null } | null, episode: Array<{ __typename?: 'Episode', id?: string | null, name?: string | null, air_date?: string | null, episode?: string | null } | null> } | null };
 
-export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
+export type CharactesQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']>;
+}>;
 
 
-export type CharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, species?: string | null, image?: string | null } | null> | null } | null };
+export type CharactesQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, species?: string | null, image?: string | null } | null> | null } | null };
 
 
 export const CharacterDocument = gql`
@@ -271,9 +273,9 @@ export function useCharacterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type CharacterQueryHookResult = ReturnType<typeof useCharacterQuery>;
 export type CharacterLazyQueryHookResult = ReturnType<typeof useCharacterLazyQuery>;
 export type CharacterQueryResult = Apollo.QueryResult<CharacterQuery, CharacterQueryVariables>;
-export const CharactersDocument = gql`
-    query Characters {
-  characters {
+export const CharactesDocument = gql`
+    query Charactes($page: Int) {
+  characters(page: $page) {
     results {
       id
       name
@@ -285,28 +287,29 @@ export const CharactersDocument = gql`
     `;
 
 /**
- * __useCharactersQuery__
+ * __useCharactesQuery__
  *
- * To run a query within a React component, call `useCharactersQuery` and pass it any options that fit your needs.
- * When your component renders, `useCharactersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useCharactesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCharactesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCharactersQuery({
+ * const { data, loading, error } = useCharactesQuery({
  *   variables: {
+ *      page: // value for 'page'
  *   },
  * });
  */
-export function useCharactersQuery(baseOptions?: Apollo.QueryHookOptions<CharactersQuery, CharactersQueryVariables>) {
+export function useCharactesQuery(baseOptions?: Apollo.QueryHookOptions<CharactesQuery, CharactesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CharactersQuery, CharactersQueryVariables>(CharactersDocument, options);
+        return Apollo.useQuery<CharactesQuery, CharactesQueryVariables>(CharactesDocument, options);
       }
-export function useCharactersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharactersQuery, CharactersQueryVariables>) {
+export function useCharactesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharactesQuery, CharactesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CharactersQuery, CharactersQueryVariables>(CharactersDocument, options);
+          return Apollo.useLazyQuery<CharactesQuery, CharactesQueryVariables>(CharactesDocument, options);
         }
-export type CharactersQueryHookResult = ReturnType<typeof useCharactersQuery>;
-export type CharactersLazyQueryHookResult = ReturnType<typeof useCharactersLazyQuery>;
-export type CharactersQueryResult = Apollo.QueryResult<CharactersQuery, CharactersQueryVariables>;
+export type CharactesQueryHookResult = ReturnType<typeof useCharactesQuery>;
+export type CharactesLazyQueryHookResult = ReturnType<typeof useCharactesLazyQuery>;
+export type CharactesQueryResult = Apollo.QueryResult<CharactesQuery, CharactesQueryVariables>;
