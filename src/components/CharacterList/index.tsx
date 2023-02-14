@@ -1,6 +1,6 @@
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { FC } from 'react';
 
 import { Character } from '../../generated/graphql';
@@ -22,7 +22,7 @@ export const CharacterList: FC<Props> = ({
   canPrevPage,
   canNextPage,
 }) => (
-  <Container maxWidth="md">
+  <>
     <Grid container spacing={2}>
       {characters.map(character => (
         <CharacterCard
@@ -40,5 +40,5 @@ export const CharacterList: FC<Props> = ({
         <ArrowRightIcon sx={{ transform: 'scale(1.5)' }} />
       </Button>
     </Box>
-  </Container>
+  </>
 );

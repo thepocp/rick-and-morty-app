@@ -210,6 +210,7 @@ export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 
 
 export type CharactesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']>;
+  filters?: InputMaybe<FilterCharacter>;
 }>;
 
 
@@ -274,8 +275,8 @@ export type CharacterQueryHookResult = ReturnType<typeof useCharacterQuery>;
 export type CharacterLazyQueryHookResult = ReturnType<typeof useCharacterLazyQuery>;
 export type CharacterQueryResult = Apollo.QueryResult<CharacterQuery, CharacterQueryVariables>;
 export const CharactesDocument = gql`
-    query Charactes($page: Int) {
-  characters(page: $page) {
+    query Charactes($page: Int, $filters: FilterCharacter) {
+  characters(page: $page, filter: $filters) {
     results {
       id
       name
@@ -302,6 +303,7 @@ export const CharactesDocument = gql`
  * const { data, loading, error } = useCharactesQuery({
  *   variables: {
  *      page: // value for 'page'
+ *      filters: // value for 'filters'
  *   },
  * });
  */

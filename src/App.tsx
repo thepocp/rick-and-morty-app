@@ -9,10 +9,12 @@ import {
 } from '@mui/material';
 import { FC, useEffect, useMemo, useState } from 'react';
 
+import { CharacterFilters } from './components/CharacterFilters';
 import { CharacterList } from './components/CharacterList';
 import { CharacterPanel } from './components/CharacterPanel';
 import { TopBar } from './components/TopBar';
 import {
+  FilterCharacter,
   useCharacterLazyQuery,
   useCharactesLazyQuery,
 } from './generated/graphql';
@@ -68,6 +70,15 @@ export const App: FC = () => {
     });
   };
 
+  const applyFilters = (filters: FilterCharacter): void => {
+    loadCharacters({
+      variables: {
+        page: 1,
+        filters,
+      },
+    });
+  };
+
   useEffect(() => {
     loadCharacters({
       variables: {
@@ -82,8 +93,12 @@ export const App: FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
-      {charactersLoading ? (
-        <Container maxWidth="md">
+      <Container maxWidth="md">
+        <CharacterFilters
+          filters={charactersVariables?.filters || {}}
+          onChange={applyFilters}
+        />
+        {charactersLoading ? (
           <Grid container spacing={2}>
             {new Array(20).fill(0).map((_, index) => (
               <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
@@ -91,22 +106,22 @@ export const App: FC = () => {
               </Grid>
             ))}
           </Grid>
-        </Container>
-      ) : null}
-      <CharacterList
-        canNextPage={charactersData?.characters?.info?.next !== null}
-        canPrevPage={charactersVariables?.page !== 1}
-        characters={characters}
-        fetchNextData={fetchNextData}
-        fetchPrevData={fetchPrevData}
-        showCharacterInfo={showCharacterInfo}
-      />
-      <CharacterPanel
-        character={characterData?.character}
-        characterLoading={characterLoading}
-        isDrawerOpen={isDrawerOpen}
-        toggleDrawer={(): void => setIsDrawerOpen(!isDrawerOpen)}
-      />
+        ) : null}
+        <CharacterList
+          canNextPage={charactersData?.characters?.info?.next !== null}
+          canPrevPage={charactersVariables?.page !== 1}
+          characters={characters}
+          fetchNextData={fetchNextData}
+          fetchPrevData={fetchPrevData}
+          showCharacterInfo={showCharacterInfo}
+        />
+        <CharacterPanel
+          character={characterData?.character}
+          characterLoading={characterLoading}
+          isDrawerOpen={isDrawerOpen}
+          toggleDrawer={(): void => setIsDrawerOpen(!isDrawerOpen)}
+        />
+      </Container>
     </ThemeProvider>
   );
 };
