@@ -3,6 +3,7 @@ import { Box, CardMedia, IconButton, Typography } from '@mui/material';
 import { FC } from 'react';
 
 import { CharacterQuery } from '../../generated/graphql';
+import { InfoGrid } from '../InfoGrid';
 
 type Props = {
   character: CharacterQuery['character'];
@@ -26,25 +27,23 @@ export const CharacterInfo: FC<Props> = ({ character, onClose }) => (
       image={character?.image || ''}
       sx={{ borderRadius: '4px', marginBottom: '1rem' }}
     />
-    {character?.gender ? (
-      <Typography>Gender: {character.gender}</Typography>
-    ) : null}
-    {character?.status ? (
-      <Typography>Status: {character.status}</Typography>
-    ) : null}
-    {character?.species ? (
-      <Typography>Species: {character.species}</Typography>
-    ) : null}
-    {character?.type ? <Typography>Type: {character.type}</Typography> : null}
-    {character?.origin?.name ? (
-      <Typography>Origin: {character.origin.name}</Typography>
-    ) : null}
-    {character?.location?.name ? (
-      <Typography>Location: {character.location.name}</Typography>
-    ) : null}
+    <InfoGrid
+      rows={[
+        { label: 'Gender', value: character?.gender },
+        { label: 'Status', value: character?.status },
+        { label: 'Species', value: character?.species },
+        { label: 'Type', value: character?.type },
+        { label: 'Origin', value: character?.origin?.name },
+        { label: 'Location', value: character?.location?.name },
+        {
+          label: 'Episode count',
+          value: character?.episode?.length?.toString(),
+        },
+      ]}
+    />
+
     {character?.episode?.length ? (
       <>
-        <Typography>Episode count: {character.episode.length}</Typography>
         <Typography component="h6" sx={{ marginTop: '1rem' }} variant="h6">
           {character?.episode?.length === 1 ? 'Episode' : 'Episodes'}
         </Typography>
