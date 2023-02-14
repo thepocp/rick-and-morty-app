@@ -5,9 +5,8 @@ import {
   Grid,
   Skeleton,
   ThemeProvider,
-  useMediaQuery,
 } from '@mui/material';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { CharacterFilters } from './components/CharacterFilters';
 import { CharacterList } from './components/CharacterList';
@@ -20,20 +19,13 @@ import {
 } from './generated/graphql';
 import { filterEmpty } from './helpers/arrays';
 
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 export const App: FC = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [darkMode, setDarkMode] = useState(prefersDarkMode);
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: darkMode ? 'dark' : 'light',
-        },
-      }),
-    [darkMode]
-  );
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [
     loadCharacters,
@@ -92,7 +84,7 @@ export const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <TopBar />
       <Container maxWidth="md">
         <CharacterFilters
           filters={charactersVariables?.filters || {}}
