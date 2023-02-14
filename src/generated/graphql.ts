@@ -213,7 +213,7 @@ export type CharactesQueryVariables = Exact<{
 }>;
 
 
-export type CharactesQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, species?: string | null, image?: string | null } | null> | null } | null };
+export type CharactesQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, species?: string | null, image?: string | null } | null> | null, info?: { __typename?: 'Info', next?: number | null } | null } | null };
 
 
 export const CharacterDocument = gql`
@@ -281,6 +281,9 @@ export const CharactesDocument = gql`
       name
       species
       image
+    }
+    info {
+      next
     }
   }
 }

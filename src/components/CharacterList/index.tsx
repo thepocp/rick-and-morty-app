@@ -1,6 +1,7 @@
-import { Container, Grid } from '@mui/material';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { Box, Button, Container, Grid } from '@mui/material';
 import { FC } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Character } from '../../generated/graphql';
 import { CharacterCard } from '../CharacterCard';
@@ -8,29 +9,36 @@ import { CharacterCard } from '../CharacterCard';
 type Props = {
   characters: Partial<Character>[];
   showCharacterInfo: (id: string) => void;
-  fetchData: () => void;
+  fetchPrevData: () => void;
+  fetchNextData: () => void;
+  canPrevPage: boolean;
+  canNextPage: boolean;
 };
 export const CharacterList: FC<Props> = ({
   characters,
   showCharacterInfo,
-  fetchData,
+  fetchPrevData,
+  fetchNextData,
+  canPrevPage,
+  canNextPage,
 }) => (
-  <InfiniteScroll
-    dataLength={characters.length}
-    hasMore
-    loader={<h4>Loading...</h4>}
-    next={fetchData}
-  >
-    <Container maxWidth="md">
-      <Grid container spacing={2}>
-        {characters.map(character => (
-          <CharacterCard
-            key={character.id}
-            character={character}
-            showCharacterInfo={showCharacterInfo}
-          />
-        ))}
-      </Grid>
-    </Container>
-  </InfiniteScroll>
+  <Container maxWidth="md">
+    <Grid container spacing={2}>
+      {characters.map(character => (
+        <CharacterCard
+          key={character.id}
+          character={character}
+          showCharacterInfo={showCharacterInfo}
+        />
+      ))}
+    </Grid>
+    <Box display="flex" justifyContent="center" margin="1rem">
+      <Button disabled={!canPrevPage} onClick={fetchPrevData} size="large">
+        <ArrowLeftIcon sx={{ transform: 'scale(1.5)' }} />
+      </Button>
+      <Button disabled={!canNextPage} onClick={fetchNextData} size="large">
+        <ArrowRightIcon sx={{ transform: 'scale(1.5)' }} />
+      </Button>
+    </Box>
+  </Container>
 );

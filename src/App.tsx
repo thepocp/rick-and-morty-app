@@ -13,7 +13,6 @@ import { CharacterList } from './components/CharacterList';
 import { CharacterPanel } from './components/CharacterPanel';
 import { TopBar } from './components/TopBar';
 import {
-  Character,
   useCharacterLazyQuery,
   useCharactesLazyQuery,
 } from './generated/graphql';
@@ -22,7 +21,6 @@ import { filterEmpty } from './helpers/arrays';
 export const App: FC = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
-  const [characters, setCharacters] = useState<Partial<Character>[]>([]);
 
   const theme = useMemo(
     () =>
@@ -49,24 +47,36 @@ export const App: FC = () => {
     { data: characterData, loading: characterLoading },
   ] = useCharacterLazyQuery();
 
-  useEffect(() => {
-    setCharacters(oldValue =>
-      filterEmpty([...oldValue, ...(charactersData?.characters?.results || [])])
-    );
-  }, [charactersData]);
-
   const showCharacterInfo = (id: string): void => {
     loadCharacterInfo({ variables: { id } });
     setIsDrawerOpen(true);
   };
 
-  const fetchData = (): void => {
+  const fetchPrevData = (): void => {
+    loadCharacters({
+      variables: {
+        page: (charactersVariables?.page || 0) - 1,
+      },
+    });
+  };
+
+  const fetchNextData = (): void => {
     loadCharacters({
       variables: {
         page: (charactersVariables?.page || 0) + 1,
       },
     });
   };
+
+  useEffect(() => {
+    loadCharacters({
+      variables: {
+        page: 1,
+      },
+    });
+  }, [loadCharacters]);
+
+  const characters = filterEmpty(charactersData?.characters?.results || []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,8 +94,11 @@ export const App: FC = () => {
         </Container>
       ) : null}
       <CharacterList
+        canNextPage={charactersData?.characters?.info?.next !== null}
+        canPrevPage={charactersVariables?.page !== 1}
         characters={characters}
-        fetchData={fetchData}
+        fetchNextData={fetchNextData}
+        fetchPrevData={fetchPrevData}
         showCharacterInfo={showCharacterInfo}
       />
       <CharacterPanel

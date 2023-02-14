@@ -6,5 +6,8 @@ query Charactes($page: Int) {
             species
             image
         }
+        info {
+            next
+        }
     }
 }
