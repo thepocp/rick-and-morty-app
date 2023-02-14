@@ -49,7 +49,7 @@ export const CharacterPanel: FC<Props> = ({
           <CircularProgress />
         </Grid>
       ) : (
-        <CharacterInfo character={character} />
+        <CharacterInfo character={character} onClose={toggleDrawer} />
       )}
     </SwipeableDrawer>
   );
