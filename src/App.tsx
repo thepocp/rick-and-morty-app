@@ -82,8 +82,6 @@ export const App: FC = () => {
 
   const characters = filterEmpty(charactersData?.characters?.results || []);
 
-  console.log('Test');
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
