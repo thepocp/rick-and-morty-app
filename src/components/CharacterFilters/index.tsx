@@ -5,6 +5,7 @@ import { FilterCharacter } from '../../generated/graphql';
 import { SearchBar } from '../SearchBar';
 import { genders, specieses, statuses, types } from './constants';
 import { Filter } from './Filter';
+import { useFilters } from './hooks/useFilters';
 
 type Props = {
   filters: FilterCharacter;
@@ -12,18 +13,7 @@ type Props = {
 };
 
 export const CharacterFilters: FC<Props> = ({ filters, onChange }) => {
-  const applyFilters = (name: keyof FilterCharacter, value: string): void => {
-    const newFilters = {
-      ...filters,
-      [name]: value,
-    };
-
-    if (value === 'all') {
-      delete newFilters[name];
-    }
-
-    onChange(newFilters);
-  };
+  const { applyFilters } = useFilters(filters, onChange);
 
   return (
     <Box marginBottom="1rem">

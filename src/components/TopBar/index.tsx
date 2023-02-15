@@ -4,11 +4,7 @@ import { FC } from 'react';
 
 export const TopBar: FC = () => (
   <AppBar position="sticky">
-    <Toolbar
-      sx={{
-        gap: '0.5em',
-      }}
-    >
+    <Toolbar sx={{ gap: '0.5em' }}>
       <Typography color="inherit" noWrap sx={{ flexGrow: 1 }} variant="h6">
         Rick and Morty character guide
       </Typography>
