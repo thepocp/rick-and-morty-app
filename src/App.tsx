@@ -86,11 +86,14 @@ export const App: FC = () => {
           filters={charactersVariables?.filters || {}}
           onChange={applyFilters}
         />
-        {charactersLoading ? <ListLoadingGrid /> : null}
-        <CharacterList
-          characters={characters}
-          showCharacterInfo={showCharacterInfo}
-        />
+        {charactersLoading ? (
+          <ListLoadingGrid />
+        ) : (
+          <CharacterList
+            characters={characters}
+            showCharacterInfo={showCharacterInfo}
+          />
+        )}
         <Pagination
           canNextPage={charactersData?.characters?.info?.next !== null}
           canPrevPage={charactersVariables?.page !== 1}
