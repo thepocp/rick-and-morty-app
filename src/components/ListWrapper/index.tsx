@@ -1,8 +1,8 @@
 import { Container, useMediaQuery, useTheme } from '@mui/material';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const ListWrapper: FC<Props> = ({ children }) => {
@@ -13,8 +13,9 @@ export const ListWrapper: FC<Props> = ({ children }) => {
     <Container
       maxWidth="md"
       sx={{
-        flex: '1 1 auto',
-        overflowX: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
         '&:before': isSm
           ? {
               content: '""',

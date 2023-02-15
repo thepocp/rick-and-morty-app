@@ -1,8 +1,6 @@
 import {
-  Box,
   createTheme,
   CssBaseline,
-  GlobalStyles,
   Grid,
   Skeleton,
   ThemeProvider,
@@ -86,45 +84,33 @@ export const App: FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyles
-        styles={{
-          html: {
-            overflow: 'hidden',
-          },
-          body: {
-            overflow: 'hidden',
-          },
-        }}
-      />
       <CssBaseline />
-      <Box display="flex" flexDirection="column" gap="1rem" height="100vh">
-        <TopBar />
+      <TopBar />
+      <ListWrapper>
         <CharacterFilters
           filters={charactersVariables?.filters || {}}
           onChange={applyFilters}
         />
-        <ListWrapper>
-          {charactersLoading ? (
-            <Grid container spacing={2}>
-              {new Array(20).fill(0).map((_, index) => (
-                <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
-                  <Skeleton height="320px" variant="rectangular" />
-                </Grid>
-              ))}
-            </Grid>
-          ) : null}
-          <CharacterList
-            characters={characters}
-            showCharacterInfo={showCharacterInfo}
-          />
-        </ListWrapper>
+        {charactersLoading ? (
+          <Grid container spacing={2}>
+            {new Array(20).fill(0).map((_, index) => (
+              <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
+                <Skeleton height="320px" variant="rectangular" />
+              </Grid>
+            ))}
+          </Grid>
+        ) : null}
+        <CharacterList
+          characters={characters}
+          showCharacterInfo={showCharacterInfo}
+        />
         <Pagination
           canNextPage={charactersData?.characters?.info?.next !== null}
           canPrevPage={charactersVariables?.page !== 1}
           fetchNextData={fetchNextData}
           fetchPrevData={fetchPrevData}
         />
-      </Box>
+      </ListWrapper>
       <CharacterPanel
         character={characterData?.character}
         characterLoading={characterLoading}
