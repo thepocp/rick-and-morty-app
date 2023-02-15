@@ -24,7 +24,7 @@ export const ListWrapper: FC<Props> = ({ children }) => {
               left: 0,
               width: '50%',
               height: '100%',
-              background: 'url(/rick.png) no-repeat left',
+              background: 'url(/rick.webp) no-repeat left',
               backgroundSize: 'contain',
               opacity: 0.2,
               zIndex: -1,
