@@ -1,7 +1,8 @@
 import {
-  Container,
+  Box,
   createTheme,
   CssBaseline,
+  GlobalStyles,
   Grid,
   Skeleton,
   ThemeProvider,
@@ -11,6 +12,8 @@ import { FC, useEffect, useState } from 'react';
 import { CharacterFilters } from './components/CharacterFilters';
 import { CharacterList } from './components/CharacterList';
 import { CharacterPanel } from './components/CharacterPanel';
+import { ListWrapper } from './components/ListWrapper';
+import { Pagination } from './components/Pagination';
 import { TopBar } from './components/TopBar';
 import {
   FilterCharacter,
@@ -83,37 +86,51 @@ export const App: FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles
+        styles={{
+          html: {
+            overflow: 'hidden',
+          },
+          body: {
+            overflow: 'hidden',
+          },
+        }}
+      />
       <CssBaseline />
-      <TopBar />
-      <Container maxWidth="md">
+      <Box display="flex" flexDirection="column" gap="1rem" height="100vh">
+        <TopBar />
         <CharacterFilters
           filters={charactersVariables?.filters || {}}
           onChange={applyFilters}
         />
-        {charactersLoading ? (
-          <Grid container spacing={2}>
-            {new Array(20).fill(0).map((_, index) => (
-              <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
-                <Skeleton height="320px" variant="rectangular" />
-              </Grid>
-            ))}
-          </Grid>
-        ) : null}
-        <CharacterList
+        <ListWrapper>
+          {charactersLoading ? (
+            <Grid container spacing={2}>
+              {new Array(20).fill(0).map((_, index) => (
+                <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
+                  <Skeleton height="320px" variant="rectangular" />
+                </Grid>
+              ))}
+            </Grid>
+          ) : null}
+          <CharacterList
+            characters={characters}
+            showCharacterInfo={showCharacterInfo}
+          />
+        </ListWrapper>
+        <Pagination
           canNextPage={charactersData?.characters?.info?.next !== null}
           canPrevPage={charactersVariables?.page !== 1}
-          characters={characters}
           fetchNextData={fetchNextData}
           fetchPrevData={fetchPrevData}
-          showCharacterInfo={showCharacterInfo}
         />
-        <CharacterPanel
-          character={characterData?.character}
-          characterLoading={characterLoading}
-          isDrawerOpen={isDrawerOpen}
-          toggleDrawer={(): void => setIsDrawerOpen(!isDrawerOpen)}
-        />
-      </Container>
+      </Box>
+      <CharacterPanel
+        character={characterData?.character}
+        characterLoading={characterLoading}
+        isDrawerOpen={isDrawerOpen}
+        toggleDrawer={(): void => setIsDrawerOpen(!isDrawerOpen)}
+      />
     </ThemeProvider>
   );
 };

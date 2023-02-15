@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const CharacterInfo: FC<Props> = ({ character, onClose }) => (
-  <div style={{ padding: '1rem', overflow: 'auto' }}>
+  <Box overflow="auto" padding="1rem">
     <Box alignItems="center" display="flex" marginBottom="1rem">
       <Typography component="h5" flexGrow={1} variant="h5">
         {character?.name}
@@ -54,5 +54,5 @@ export const CharacterInfo: FC<Props> = ({ character, onClose }) => (
         ))}
       </>
     ) : null}
-  </div>
+  </Box>
 );

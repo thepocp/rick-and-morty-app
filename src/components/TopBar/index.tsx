@@ -3,7 +3,7 @@ import { AppBar, Link, Toolbar, Typography } from '@mui/material';
 import { FC } from 'react';
 
 export const TopBar: FC = () => (
-  <AppBar position="static">
+  <AppBar position="sticky">
     <Toolbar
       sx={{
         gap: '0.5em',

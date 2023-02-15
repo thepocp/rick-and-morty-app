@@ -25,7 +25,7 @@ export const CharacterFilters: FC<Props> = ({ filters, onChange }) => {
   };
 
   return (
-    <Box display="flex" justifyContent="center" margin="1rem">
+    <Box display="flex" justifyContent="center">
       <Filter
         filterValues={types}
         label="Type"
