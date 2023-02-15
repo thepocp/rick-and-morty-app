@@ -1,15 +1,10 @@
-import {
-  createTheme,
-  CssBaseline,
-  Grid,
-  Skeleton,
-  ThemeProvider,
-} from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 
 import { CharacterFilters } from './components/CharacterFilters';
 import { CharacterList } from './components/CharacterList';
 import { CharacterPanel } from './components/CharacterPanel';
+import { ListLoadingGrid } from './components/ListLoadingGrid';
 import { ListWrapper } from './components/ListWrapper';
 import { Pagination } from './components/Pagination';
 import { TopBar } from './components/TopBar';
@@ -91,15 +86,7 @@ export const App: FC = () => {
           filters={charactersVariables?.filters || {}}
           onChange={applyFilters}
         />
-        {charactersLoading ? (
-          <Grid container spacing={2}>
-            {new Array(20).fill(0).map((_, index) => (
-              <Grid key={index} item lg={3} md={4} sm={6} xs={6}>
-                <Skeleton height="320px" variant="rectangular" />
-              </Grid>
-            ))}
-          </Grid>
-        ) : null}
+        {charactersLoading ? <ListLoadingGrid /> : null}
         <CharacterList
           characters={characters}
           showCharacterInfo={showCharacterInfo}
