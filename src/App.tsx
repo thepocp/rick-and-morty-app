@@ -1,5 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
+import useLocation from 'wouter/use-location';
 
 import { CharacterFilters } from './components/CharacterFilters';
 import { CharacterList } from './components/CharacterList';
@@ -22,6 +23,7 @@ const theme = createTheme({
 });
 
 export const App: FC = () => {
+  const [, setLocation] = useLocation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [
     loadCharacters,
@@ -39,41 +41,90 @@ export const App: FC = () => {
 
   const showCharacterInfo = (id: string): void => {
     loadCharacterInfo({ variables: { id } });
+    setLocation(
+      `/?page=${charactersVariables?.page}&filters=${JSON.stringify(
+        charactersVariables?.filters
+      )}&character=${id}`
+    );
     setIsDrawerOpen(true);
   };
 
   const fetchPrevData = (): void => {
-    loadCharacters({
-      variables: {
-        page: (charactersVariables?.page || 0) - 1,
-      },
-    });
+    const variables = {
+      page: (charactersVariables?.page || 0) - 1,
+      filters: charactersVariables?.filters,
+    };
+    setLocation(
+      `/?page=${variables.page}&filters=${JSON.stringify(variables.filters)}`
+    );
+    loadCharacters({ variables });
   };
 
   const fetchNextData = (): void => {
-    loadCharacters({
-      variables: {
-        page: (charactersVariables?.page || 0) + 1,
-      },
-    });
+    const variables = {
+      page: (charactersVariables?.page || 0) + 1,
+      filters: charactersVariables?.filters,
+    };
+    setLocation(
+      `/?page=${variables.page}&filters=${JSON.stringify(variables.filters)}`
+    );
+    loadCharacters({ variables });
   };
 
   const applyFilters = (filters: FilterCharacter): void => {
-    loadCharacters({
-      variables: {
-        page: 1,
-        filters,
-      },
-    });
+    const variables = { page: 1, filters };
+    setLocation(`/?page=${variables.page}&filters=${JSON.stringify(filters)}`);
+    loadCharacters({ variables });
+  };
+
+  const toggleDrawer = (): void => {
+    setIsDrawerOpen(!isDrawerOpen);
+    const base = `/?page=${charactersVariables?.page}&filters=${JSON.stringify(
+      charactersVariables?.filters
+    )}`;
+    setLocation(
+      isDrawerOpen ? base : `${base}&character=${characterData?.character?.id}`
+    );
   };
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const getPage = (): number => {
+      const page = params.get('page');
+      if (page) {
+        return parseInt(page, 10);
+      }
+
+      return 1;
+    };
+
+    const getFilters = (): FilterCharacter => {
+      const filters = params.get('filters');
+
+      if (!filters) {
+        return {};
+      }
+
+      try {
+        return JSON.parse(filters);
+      } catch (e) {
+        return {};
+      }
+    };
+
+    if (params.get('character')) {
+      setIsDrawerOpen(true);
+      loadCharacterInfo({ variables: { id: params.get('character') || '' } });
+    }
+
     loadCharacters({
       variables: {
-        page: 1,
+        page: getPage(),
+        filters: getFilters(),
       },
     });
-  }, [loadCharacters]);
+  }, [loadCharacterInfo, loadCharacters]);
 
   const characters = filterEmpty(charactersData?.characters?.results || []);
 
@@ -105,7 +156,7 @@ export const App: FC = () => {
         character={characterData?.character}
         characterLoading={characterLoading}
         isDrawerOpen={isDrawerOpen}
-        toggleDrawer={(): void => setIsDrawerOpen(!isDrawerOpen)}
+        toggleDrawer={toggleDrawer}
       />
     </ThemeProvider>
   );
