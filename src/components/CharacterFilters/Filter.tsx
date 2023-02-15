@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {
@@ -9,21 +9,23 @@ type Props = {
 };
 
 export const Filter: FC<Props> = ({ value, onChange, filterValues, label }) => (
-  <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
-    <InputLabel id={`${label}-filter`}>{label}</InputLabel>
-    <Select
-      defaultValue="all"
-      label={label}
-      labelId={`${label}-filter`}
-      onChange={(event): void => onChange(event.target.value)}
-      value={value}
-    >
-      <MenuItem value="all">All</MenuItem>
-      {filterValues.map(item => (
-        <MenuItem key={item} value={item}>
-          {item === 'unknown' ? 'Unknown' : item}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
+  <Grid item md={2}>
+    <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
+      <InputLabel id={`${label}-filter`}>{label}</InputLabel>
+      <Select
+        defaultValue="all"
+        label={label}
+        labelId={`${label}-filter`}
+        onChange={(event): void => onChange(event.target.value)}
+        value={value}
+      >
+        <MenuItem value="all">All</MenuItem>
+        {filterValues.map(item => (
+          <MenuItem key={item} value={item}>
+            {item === 'unknown' ? 'Unknown' : item}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  </Grid>
 );

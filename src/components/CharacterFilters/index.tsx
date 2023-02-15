@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import { FC } from 'react';
 
 import { FilterCharacter } from '../../generated/graphql';
@@ -25,31 +25,33 @@ export const CharacterFilters: FC<Props> = ({ filters, onChange }) => {
   };
 
   return (
-    <Box display="flex" justifyContent="center">
-      <Filter
-        filterValues={types}
-        label="Type"
-        onChange={(value): void => applyFilters('type', value)}
-        value={filters.type || 'all'}
-      />
-      <Filter
-        filterValues={specieses}
-        label="Species"
-        onChange={(value): void => applyFilters('species', value)}
-        value={filters.species || 'all'}
-      />
-      <Filter
-        filterValues={genders}
-        label="Gender"
-        onChange={(value): void => applyFilters('gender', value)}
-        value={filters.gender || 'all'}
-      />
-      <Filter
-        filterValues={statuses}
-        label="Status"
-        onChange={(value): void => applyFilters('status', value)}
-        value={filters.status || 'all'}
-      />
-    </Box>
+    <Container maxWidth="md">
+      <Grid container justifyContent="center" spacing={4}>
+        <Filter
+          filterValues={types}
+          label="Type"
+          onChange={(value): void => applyFilters('type', value)}
+          value={filters.type || 'all'}
+        />
+        <Filter
+          filterValues={specieses}
+          label="Species"
+          onChange={(value): void => applyFilters('species', value)}
+          value={filters.species || 'all'}
+        />
+        <Filter
+          filterValues={genders}
+          label="Gender"
+          onChange={(value): void => applyFilters('gender', value)}
+          value={filters.gender || 'all'}
+        />
+        <Filter
+          filterValues={statuses}
+          label="Status"
+          onChange={(value): void => applyFilters('status', value)}
+          value={filters.status || 'all'}
+        />
+      </Grid>
+    </Container>
   );
 };
