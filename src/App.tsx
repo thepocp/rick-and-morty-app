@@ -81,11 +81,11 @@ export const App: FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <TopBar />
+      <CharacterFilters
+        filters={charactersVariables?.filters || {}}
+        onChange={applyFilters}
+      />
       <ListWrapper>
-        <CharacterFilters
-          filters={charactersVariables?.filters || {}}
-          onChange={applyFilters}
-        />
         {charactersLoading ? (
           <ListLoadingGrid />
         ) : (

@@ -9,8 +9,8 @@ type Props = {
 };
 
 export const Filter: FC<Props> = ({ value, onChange, filterValues, label }) => (
-  <Grid item md={2}>
-    <FormControl sx={{ m: 1, minWidth: 120 }} variant="standard">
+  <Grid item lg={1} md={2} sm={3} xs={3}>
+    <FormControl fullWidth variant="standard">
       <InputLabel id={`${label}-filter`}>{label}</InputLabel>
       <Select
         defaultValue="all"

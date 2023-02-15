@@ -1,7 +1,8 @@
-import { Container, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { FC } from 'react';
 
 import { FilterCharacter } from '../../generated/graphql';
+import { SearchBar } from '../SearchBar';
 import { genders, specieses, statuses, types } from './constants';
 import { Filter } from './Filter';
 
@@ -25,8 +26,8 @@ export const CharacterFilters: FC<Props> = ({ filters, onChange }) => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Grid container justifyContent="center" spacing={4}>
+    <Box marginBottom="1rem">
+      <Grid alignItems="center" container justifyContent="center" spacing={2}>
         <Filter
           filterValues={types}
           label="Type"
@@ -51,7 +52,13 @@ export const CharacterFilters: FC<Props> = ({ filters, onChange }) => {
           onChange={(value): void => applyFilters('status', value)}
           value={filters.status || 'all'}
         />
+        <Grid item lg={2} md={2} sm={12} xs={12}>
+          <SearchBar
+            onSearch={(value): void => applyFilters('name', value)}
+            value={filters.name || ''}
+          />
+        </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 };
