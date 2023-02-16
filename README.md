@@ -25,5 +25,5 @@ To run the test suite for this project, follow these steps:
 
 ### Description
 
-Get ready to travel across dimensions and universes with this excellent Rick and Morty React app! Discover all the information you need about your favorite characters, episodes, and locations with just one click. Explore the multiverse and have fun while doing it!
+Get ready to travel across dimensions and universes with this excellent Rick and Morty character guide! Discover all the information you need about your favorite characters, episodes, and locations with just one click. Explore the multiverse and have fun while doing it!
 And remember, in this project, we don't make mistakes; we just have happy little accidents! So don't be afraid to experiment and create your portal to travel to the unknown.
