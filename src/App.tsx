@@ -5,7 +5,7 @@ import { CharacterPanel } from './components/CharacterPanel';
 import { Content } from './components/Content';
 import { TopBar } from './components/TopBar';
 import { useCharacter } from './hooks/useCharacter';
-import { useCharactes } from './hooks/useCharactes';
+import { useCharacters } from './hooks/useCharacters';
 
 const theme = createTheme({
   palette: {
@@ -23,7 +23,7 @@ export const App: FC = () => {
     canPrevPage,
     canNextPage,
     applyFilters,
-  } = useCharactes();
+  } = useCharacters();
 
   const {
     isCharacterInfoOpen,

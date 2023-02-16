@@ -1,4 +1,4 @@
-import { FilterCharacter } from '../../../generated/graphql';
+import { FilterCharacter } from '../generated/graphql';
 
 type Result = {
   applyFilters: (name: keyof FilterCharacter, value: string) => void;

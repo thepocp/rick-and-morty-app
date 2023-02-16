@@ -54,9 +54,10 @@ export const useCharacter = (
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const characterId = params.get('characterId');
 
-    if (params.get('characterId')) {
-      showCharacterInfo(params.get('characterId') || '');
+    if (characterId) {
+      showCharacterInfo(characterId);
     }
   }, [showCharacterInfo]);
 

@@ -2,10 +2,10 @@ import { Box, Grid } from '@mui/material';
 import { FC } from 'react';
 
 import { FilterCharacter } from '../../generated/graphql';
+import { useFilters } from '../../hooks/useFilters';
 import { SearchBar } from '../SearchBar';
 import { genders, specieses, statuses, types } from './constants';
 import { Filter } from './Filter';
-import { useFilters } from './hooks/useFilters';
 
 type Props = {
   filters: FilterCharacter;

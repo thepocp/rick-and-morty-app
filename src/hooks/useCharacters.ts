@@ -20,7 +20,7 @@ type Result = {
   charactersVariables: CharactesQueryVariables | undefined;
 };
 
-export const useCharactes = (): Result => {
+export const useCharacters = (): Result => {
   const { setQueryParams } = useLocation();
   const [
     loadCharacters,
@@ -36,6 +36,7 @@ export const useCharactes = (): Result => {
       page: (charactersVariables?.page || 0) - 1,
       filters: charactersVariables?.filters,
     };
+
     setQueryParams(variables);
     loadCharacters({ variables });
   }, [charactersVariables, loadCharacters, setQueryParams]);
