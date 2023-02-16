@@ -13,6 +13,8 @@ const theme = createTheme({
   },
 });
 
+console.log('Test pull request code check');
+
 export const App: FC = () => {
   const {
     characters,
